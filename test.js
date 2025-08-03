@@ -1,5 +1,5 @@
 require('dotenv').config();
-const handler = require('./api/registros');
+const handler = require('./api/index');
 
 handler({}, {
   status: (code) => ({
