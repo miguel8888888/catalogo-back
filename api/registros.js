@@ -16,6 +16,7 @@ app.use(express.json());
 // Ruta para traer todos los registros con datos de pais (JOIN)
 app.get('/', async (req, res) => {
   try {
+    console.log('Consulta de registros con JOIN');
     const consulta = `
       SELECT r.*, p.pais, p.bandera
       FROM registros r
