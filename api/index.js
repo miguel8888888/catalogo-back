@@ -6,19 +6,24 @@ const pool = new Pool({
 });
 
 module.exports = async (req, res) => {
-  // ✅ Cabeceras CORS necesarias
-  res.setHeader("Access-Control-Allow-Origin", "*"); // O tu dominio frontend específico
+  res.setHeader("Access-Control-Allow-Origin", "*"); 
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // ✅ Manejo de preflight (cuando el navegador envía una petición OPTIONS antes de la real)
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  // 💡 Lógica real
   try {
-    const result = await pool.query('SELECT * FROM registros');
+    const consulta = `
+      SELECT 
+        r.*,
+        p.pais,
+        p.bandera
+      FROM registros r
+      JOIN pais p ON r.pais = p.id
+    `;
+    const result = await pool.query(consulta);
     res.status(200).json(result.rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
