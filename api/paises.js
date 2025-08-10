@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
 
   // 💡 Lógica real
   try {
-    const result = await pool.query('SELECT * FROM paises');
+    const result = await pool.query('SELECT * FROM pais');
     res.status(200).json(result.rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
