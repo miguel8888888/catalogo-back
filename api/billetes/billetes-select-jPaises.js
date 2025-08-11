@@ -1,7 +1,7 @@
-// api/registros.js
 const { Pool } = require('pg');
 require('dotenv').config(); // Para usar .env en local
 
+// --- Conexión a la base de datos ---
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
@@ -19,22 +19,14 @@ async function handler(req, res) {
   }
 
   try {
-    let result;
-
-    if (req.url === '/simple') {
-      // Consulta simple sin JOIN
-      result = await pool.query('SELECT * FROM registros');
-    } else {
-      // Consulta con JOIN
-      const consulta = `
-        SELECT r.*, p.pais, p.bandera
-        FROM registros r
-        JOIN pais p ON r.pais = p.id
-      `;
-      result = await pool.query(consulta);
-    }
-
-    res.status(200).json({ registros: result.rows, message: 'Registros obtenidos correctamente' });
+    console.log('Consulta de registros con JOIN');
+    const consulta = `
+      SELECT r.*, p.pais, p.bandera
+      FROM registros r
+      JOIN pais p ON r.pais = p.id
+    `;
+    const result = await pool.query(consulta);
+    res.status(200).json({ registros: result.rows, message: 'Registros obtenidos exitosamente' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -52,14 +44,12 @@ if (require.main === module) {
   app.use(cors());
   app.use(express.json());
 
-  // Ruta principal con JOIN
-  app.get('/', (req, res) => handler(req, res));
+  app.all('/', (req, res) => handler(req, res));
 
-  // Ruta simple sin JOIN
-  app.get('/simple', (req, res) => handler(req, res));
-
-  const port = 3002; // diferente del de paises.js
+  const port = 3001;
   app.listen(port, () => {
     console.log(`Servidor local escuchando en http://localhost:${port}`);
   });
 }
+
+// Ejecutar 'node api/billetes/billetes-select-jPaises.js' para iniciar el servidor local y hacer pruebas
