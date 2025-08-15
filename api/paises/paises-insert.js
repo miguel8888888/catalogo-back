@@ -59,4 +59,4 @@ if (require.main === module) {
     console.log(`Servidor local escuchando en http://localhost:${port}`);
   });
 }
-// ejecutar 'node api/paises-insert.js' para iniciar el servidor local y hacer pruebas
+// ejecutar 'node api/paises/paises-insert.js' para iniciar el servidor local y hacer pruebas

@@ -18,7 +18,7 @@ async function handler(req, res) {
   }
 
   try {
-    const result = await pool.query('SELECT * FROM pais');
+    const result = await pool.query('SELECT * FROM pais ORDER BY pais ASC');
     res.status(200).json({ paises: result.rows, message: 'Paises obtenidos exitosamente' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -45,4 +45,4 @@ if (require.main === module) {
   });
 }
 
-// ejecutar 'node api/paises.js' para iniciar el servidor local y hacer pruebas
+// ejecutar 'node api/paises/paises.js' para iniciar el servidor local y hacer pruebas
