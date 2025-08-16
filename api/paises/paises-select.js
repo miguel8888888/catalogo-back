@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+
 require('dotenv').config(); // Para usar .env en local
 
 const pool = new Pool({
@@ -9,6 +10,7 @@ const pool = new Pool({
 // --- Lógica principal ---
 async function handler(req, res) {
   // ✅ Cabeceras CORS necesarias
+  res.setHeader('Cache-Control', 'no-store, max-age=0'); 
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
