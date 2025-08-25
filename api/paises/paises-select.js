@@ -1,11 +1,15 @@
-const { Pool } = require('pg');
+import { Pool } from "@neondatabase/serverless";
+// const { Pool } = require('pg');
+
+
 
 require('dotenv').config(); // Para usar .env en local
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: { rejectUnauthorized: false },
+// });
 
 // --- Lógica principal ---
 async function handler(req, res) {
